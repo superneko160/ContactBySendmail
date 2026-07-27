@@ -11,18 +11,17 @@ if (isset($_POST["subject"]) && isset($_POST["message"])) {
     }
     // 未入力項目なし
     else {
-        // メール送信の処理
-
+        // --- メール送信の処理（ここから） ---
         mb_language("Japanese");        // 日本語に設定
         mb_internal_encoding("UTF-8");  // utf8に設定
 
         // 送信先と宛先の2つメルアドを用意する必要がある
-        $from = "";                    // 送信元（このメルアドからメールを送る）
-        $to = "";                      // 宛先
+        $from = "from@example.com";    // 送信元（このメルアドからメールを送る）
+        $to = "to@example.com";        // 宛先
         $subject = $_POST["subject"];  // 件名
         $message = $_POST["message"];  // メッセージ
-        // メールヘッダー
-        $headers = "From: {$from}\nReply-To: {$from}\nContent-Type: text/plain;";
+        // メールヘッダ
+        $headers = "From: {$from}\nReply-To: {$from}\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: BASE64 \n";
 
         // メールを送信
         $result = mb_send_mail(
@@ -31,6 +30,7 @@ if (isset($_POST["subject"]) && isset($_POST["message"])) {
             $message,  // 本文
             $headers   // メールヘッダ
         );
+        // --- メール送信処理（ここまで） ---
 
         if ($result) {
             $result_message ="送信完了";
